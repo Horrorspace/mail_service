@@ -1,8 +1,11 @@
 {
-  "name": "mail-service",
+  "name": "mail_service",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": {
+    "name": "eugenii",
+    "email": "utkineugeniy@gmail.com"
+  },
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
