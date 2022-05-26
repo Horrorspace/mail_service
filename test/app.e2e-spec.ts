@@ -60,7 +60,7 @@ describe('AppController (e2e)', () => {
     it('should return error message', (done) => {
         const response: Observable<string> = client.send(
             'sendConfirmCode',
-            JSON.stringify({ test: ''}),
+            JSON.stringify({ test: '' }),
         );
         response.subscribe((data) => {
             expect(typeof data).toEqual('string');

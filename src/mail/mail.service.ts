@@ -22,10 +22,9 @@ export class MailService {
             });
             return {
                 status: 'success',
-                message: ''
+                message: '',
             };
-        }
-        catch (e) {
+        } catch (e) {
             throw new RpcException('500');
         }
     }

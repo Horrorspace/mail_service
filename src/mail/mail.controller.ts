@@ -1,4 +1,9 @@
-import { Controller, Inject, UseFilters, UseInterceptors } from '@nestjs/common';
+import {
+    Controller,
+    Inject,
+    UseFilters,
+    UseInterceptors,
+} from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UserConfirmDto } from './dto/user-confirm.dto';
 import { MailService } from './mail.service';
@@ -12,11 +17,13 @@ export class MailController {
     constructor(
         @Inject(MailService) private readonly mailService: MailService,
     ) {}
-    
+
     @MessagePattern('sendConfirmCode')
     @UseFilters(new MailExceptionFilter())
     @UseInterceptors(JsonInterceptor)
-    async sendConfirmCode(@Payload(new JsonPipe()) userConfirm: UserConfirmDto): Promise<IRes> {
+    async sendConfirmCode(
+        @Payload(new JsonPipe()) userConfirm: UserConfirmDto,
+    ): Promise<IRes> {
         return await this.mailService.sendConfirmCode(userConfirm);
     }
 }

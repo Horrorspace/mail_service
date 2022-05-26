@@ -7,7 +7,7 @@ import { MailModule } from './mail/mail.module';
         ConfigModule.forRoot({
             envFilePath: '.env',
         }),
-        MailModule
+        MailModule,
     ],
     controllers: [],
     providers: [],
