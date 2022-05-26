@@ -19,7 +19,7 @@ export class MailController {
     ) {}
 
     @MessagePattern('sendConfirmCode')
-    @UseFilters(new MailExceptionFilter)
+    @UseFilters(new MailExceptionFilter())
     @UseInterceptors(JsonInterceptor)
     async sendConfirmCode(
         @Payload(new JsonPipe()) userConfirm: UserConfirmDto,
