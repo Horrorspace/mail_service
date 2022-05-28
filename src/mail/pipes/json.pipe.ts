@@ -4,7 +4,7 @@ import { UserConfirmDto } from '../dto/user-confirm.dto';
 
 @Injectable()
 export class JsonPipe implements PipeTransform {
-    transform(value: any): UserConfirmDto {
+    public transform(value: any): UserConfirmDto {
         if (typeof value === 'string') {
             const data = JSON.parse(value) as UserConfirmDto;
             if (!data.hasOwnProperty('email')) {

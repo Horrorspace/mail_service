@@ -21,7 +21,7 @@ export class MailController {
     @MessagePattern('sendConfirmCode')
     @UseFilters(new MailExceptionFilter())
     @UseInterceptors(JsonInterceptor)
-    async sendConfirmCode(
+    public async sendConfirmCode(
         @Payload(new JsonPipe()) userConfirm: UserConfirmDto,
     ): Promise<IRes> {
         return await this.mailService.sendConfirmCode(userConfirm);

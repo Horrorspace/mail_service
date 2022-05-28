@@ -5,7 +5,7 @@ import { IRes } from '../interfaces/IRes';
 
 @Catch(RpcException)
 export class MailExceptionFilter implements RpcExceptionFilter<RpcException> {
-    catch(exception: RpcException): Observable<any> {
+    public catch(exception: RpcException): Observable<any> {
         const message = exception.getError() as string;
         const res: IRes = {
             message,

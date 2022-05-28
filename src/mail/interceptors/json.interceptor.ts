@@ -10,7 +10,7 @@ import { IRes } from '../interfaces/IRes';
 
 @Injectable()
 export class JsonInterceptor implements NestInterceptor<IRes, string> {
-    intercept(
+    public intercept(
         context: ExecutionContext,
         next: CallHandler<IRes>,
     ): Observable<string> | Promise<Observable<string>> {

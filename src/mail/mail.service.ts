@@ -12,7 +12,10 @@ export class MailService {
         @Inject(MailerService) private readonly mailerService: MailerService,
     ) {}
 
-    async sendConfirmCode({ email, code }: UserConfirmDto): Promise<IRes> {
+    public async sendConfirmCode({
+        email,
+        code,
+    }: UserConfirmDto): Promise<IRes> {
         try {
             await this.mailerService.sendMail({
                 to: email,
