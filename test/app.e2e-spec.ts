@@ -7,9 +7,12 @@ import { Observable } from 'rxjs';
 import { IRes } from 'src/mail/interfaces/IRes';
 
 describe('AppController (e2e)', () => {
+    jest.setTimeout(10000);
     let app: INestMicroservice;
     let client: ClientProxy;
+    let logger: ClientProxy;
     const mailService = 'mail_service';
+    const loggerService = 'logger_service';
 
     beforeAll(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -27,6 +30,17 @@ describe('AppController (e2e)', () => {
                             },
                         },
                     },
+                    {
+                        name: loggerService,
+                        transport: Transport.RMQ,
+                        options: {
+                            urls: ['amqp://localhost:5672'],
+                            queue: 'logger',
+                            queueOptions: {
+                                durable: true,
+                            },
+                        },
+                    },
                 ]),
             ],
         }).compile();
@@ -36,10 +50,14 @@ describe('AppController (e2e)', () => {
 
         client = app.get(mailService);
         await client.connect();
+
+        logger = app.get(loggerService);
+        await logger.connect();
     });
     afterAll(async () => {
         await app.close();
         await client.close();
+        await logger.close();
     });
 
     it('should return success message', (done) => {
@@ -62,7 +80,17 @@ describe('AppController (e2e)', () => {
             'sendConfirmCode',
             JSON.stringify({ test: '' }),
         );
-        response.subscribe((data) => {
+        const logInfo = () => {
+            return new Promise((resolve, reject) => {
+                logger.send('info', 'inf').subscribe({
+                    next: (data) => resolve(data),
+                    error: (err) => reject(err),
+                });
+            });
+        };
+        response.subscribe(async (data) => {
+            const test = await logInfo();
+            console.log(test);
             expect(typeof data).toEqual('string');
             const res = JSON.parse(data) as IRes;
             expect(res.hasOwnProperty('status')).toEqual(true);
