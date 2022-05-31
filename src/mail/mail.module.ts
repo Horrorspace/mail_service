@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { MailService } from './mail.service';
 import { MailController } from './mail.controller';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { services } from '../services.enum';
 
 const host = process.env.SMTP_HOST || 'smtp.gmail.com';
 const secure = process.env.SMTP_SECURE || true;
@@ -18,6 +20,19 @@ const transport = `${protocol}://${user}:${password}@${host}`;
                 from: user,
             },
         }),
+        ClientsModule.register([
+            {
+                name: services.logger,
+                transport: Transport.RMQ,
+                options: {
+                    urls: ['amqp://localhost:5672'],
+                    queue: 'logger',
+                    queueOptions: {
+                        durable: true,
+                    },
+                },
+            },
+        ]),
     ],
     controllers: [MailController],
     providers: [MailService],
