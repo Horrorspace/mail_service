@@ -1,0 +1,25 @@
+smtp:
+  host: 'smtp.gmail.com'
+  secure: true
+  user: 'qwefgklasm@gmail.com'
+  password: 'LOMzXtWT'
+
+rabbitmq:
+  host: 'localhost'
+  protocol: 'amqp'
+  port: 5672
+  user: 'user'
+  password: 'BGNdWquZ'
+  durable: true
+
+mongodb:
+  host: 'localhost'
+  port: 2717
+  user: 'user'
+  password: 'BGNdWquZ'
+
+logger_service:
+  queue: 'logger'
+
+mail_service:
+  queue: 'mail'
