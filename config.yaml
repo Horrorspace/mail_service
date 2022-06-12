@@ -5,7 +5,7 @@ smtp:
   password: 'LOMzXtWT'
 
 rabbitmq:
-  host: ''
+  host: 'microservices'
   protocol: 'amqp'
   port: 5672
   user: 'user'
