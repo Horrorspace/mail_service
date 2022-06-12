@@ -58,7 +58,7 @@ import { services } from '../services.enum';
                     const queue =
                         process.env.LOGGER_SERVICE_QUEUE ||
                         configService.get('logger_service.queue');
-                    const url = `${protocol}://${user}:${password}@${host}${port}`;
+                    const url = `${protocol}://${user}:${password}@${host}:${port}`;
                     return {
                         transport: Transport.RMQ,
                         options: {
