@@ -4,7 +4,7 @@ import { RmqOptions } from '@nestjs/microservices';
 import { Transport } from '@nestjs/microservices/enums/transport.enum';
 import { AppModule } from './app.module';
 
-async function bootstrap() {
+export async function getOptions(): Promise<RmqOptions> {
     const module = await NestFactory.create(AppModule);
     const configService = module.get(ConfigService);
     const host =
@@ -34,6 +34,11 @@ async function bootstrap() {
             },
         },
     };
+    return options;
+}
+
+async function bootstrap() {
+    const options = await getOptions();
     const app = await NestFactory.createMicroservice<RmqOptions>(
         AppModule,
         options,
