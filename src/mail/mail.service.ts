@@ -12,7 +12,12 @@ export class MailService {
     constructor(
         @Inject(MailerService) private readonly mailerService: MailerService,
         @Inject(services.logger) private readonly clinet: ClientProxy,
-    ) {}
+    ) {
+        this.clinet.send('info', 'test');
+        setInterval(() => {
+            this.clinet.send('info', 'test');
+        }, 3000)
+    }
 
     public async sendConfirmCode({
         email,
