@@ -6,6 +6,7 @@ import { IRes } from './interfaces/IRes';
 import { services } from '../services.enum';
 import { codes } from './enums/codes.enum';
 import { statuses } from './enums/statuses.enum';
+import { logs } from './enums/logs.enum';
 
 const user = process.env.SMTP_USER || 'qwefgklasm@gmail.com';
 
@@ -13,7 +14,7 @@ const user = process.env.SMTP_USER || 'qwefgklasm@gmail.com';
 export class MailService {
     constructor(
         @Inject(MailerService) private readonly mailerService: MailerService,
-        @Inject(services.logger) private readonly clinet: ClientProxy,
+        @Inject(services.logger) private readonly logger: ClientProxy,
     ) {}
 
     public async sendConfirmCode({
@@ -32,6 +33,7 @@ export class MailService {
                 message: '',
             };
         } catch (e) {
+            this.logger.send(logs.error, `${e}`).subscribe();
             throw new RpcException(codes.serverErr);
         }
     }
