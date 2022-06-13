@@ -7,10 +7,10 @@ import { AppModule } from './app.module';
 export async function getOptions(): Promise<RmqOptions> {
     const module = await NestFactory.create(AppModule);
     const configService = module.get(ConfigService);
-    const host =
-        process.env.RABBITMQ_HOST || configService.get('rabbitmq.host');
     const protocol =
         process.env.RABBITMQ_PROTOCOL || configService.get('rabbitmq.protocol');
+    const host =
+        process.env.RABBITMQ_HOST || configService.get('rabbitmq.host');
     const port =
         process.env.RABBITMQ_PORT || configService.get('rabbitmq.port');
     const user =
@@ -21,7 +21,7 @@ export async function getOptions(): Promise<RmqOptions> {
         process.env.RABBITMQ_DURABLE === 'true' ||
         configService.get('rabbitmq.durable');
     const queue =
-        process.env.LOGGER_SERVICE_QUEUE ||
+        process.env.MAIL_SERVICE_QUEUE ||
         configService.get('mail_service.queue');
     const url = `${protocol}://${user}:${password}@${host}${port}`;
     const options: RmqOptions = {
