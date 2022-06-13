@@ -12,12 +12,6 @@ rabbitmq:
   password: 'BGNdWquZ'
   durable: true
 
-mongodb:
-  host: 'localhost'
-  port: 2717
-  user: 'user'
-  password: 'BGNdWquZ'
-
 logger_service:
   queue: 'logger'
 
