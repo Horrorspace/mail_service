@@ -5,8 +5,8 @@ smtp:
   password: 'LOMzXtWT'
 
 rabbitmq:
-  host: 'rabbitmq'
   protocol: 'amqp'
+  host: 'localhost'
   port: 5672
   user: 'user'
   password: 'BGNdWquZ'
