@@ -1,6 +1,5 @@
-type status = 'success' | 'error';
+import { IStatus } from './IStatus';
 
-export interface IRes {
-    status: status;
+export interface IRes extends IStatus {
     message: string;
 }
