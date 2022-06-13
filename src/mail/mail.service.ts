@@ -4,6 +4,8 @@ import { RpcException, ClientProxy } from '@nestjs/microservices';
 import { UserConfirmDto } from './dto/user-confirm.dto';
 import { IRes } from './interfaces/IRes';
 import { services } from '../services.enum';
+import { codes } from './enums/codes.enum';
+import { statuses } from './enums/statuses.enum';
 
 const user = process.env.SMTP_USER || 'qwefgklasm@gmail.com';
 
@@ -26,11 +28,11 @@ export class MailService {
                 text: code,
             });
             return {
-                status: 'success',
+                status: statuses.success,
                 message: '',
             };
         } catch (e) {
-            throw new RpcException('500');
+            throw new RpcException(codes.serverErr);
         }
     }
 }
