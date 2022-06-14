@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MailModule } from './mail/mail.module';
 import configuration from './config/configuration';
+import { LoggerModule } from './logger/logger.module';
 
 @Module({
     imports: [
@@ -11,6 +12,7 @@ import configuration from './config/configuration';
             load: [configuration],
         }),
         MailModule,
+        LoggerModule,
     ],
     controllers: [],
     providers: [],

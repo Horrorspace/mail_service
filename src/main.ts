@@ -3,6 +3,9 @@ import { ConfigService } from '@nestjs/config';
 import { RmqOptions } from '@nestjs/microservices';
 import { Transport } from '@nestjs/microservices/enums/transport.enum';
 import { AppModule } from './app.module';
+import { LoggerService } from './logger/logger.service';
+import { MailExceptionFilter } from './mail/filters/mail-exception.filter';
+import { JsonInterceptor } from './mail/interceptors/json.interceptor';
 
 export async function getOptions(): Promise<RmqOptions> {
     const module = await NestFactory.create(AppModule);
@@ -43,6 +46,10 @@ async function bootstrap() {
         AppModule,
         options,
     );
+    const logger = app.get(LoggerService);
+    app.useLogger(logger);
+    app.useGlobalFilters(new MailExceptionFilter(logger));
+    app.useGlobalInterceptors(new JsonInterceptor());
     app.listen();
 }
 bootstrap();

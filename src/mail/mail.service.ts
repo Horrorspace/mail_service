@@ -1,20 +1,18 @@
 import { Injectable, Inject } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { MailerService } from '@nestjs-modules/mailer';
-import { RpcException, ClientProxy } from '@nestjs/microservices';
+import { RpcException } from '@nestjs/microservices';
 import { UserConfirmDto } from './dto/user-confirm.dto';
 import { IRes } from './interfaces/IRes';
-import { services } from '../services.enum';
 import { codes } from './enums/codes.enum';
 import { statuses } from './enums/statuses.enum';
-import { logs } from './enums/logs.enum';
-
-const user = process.env.SMTP_USER || 'qwefgklasm@gmail.com';
+import { IError } from './interfaces/IError';
 
 @Injectable()
 export class MailService {
     constructor(
         @Inject(MailerService) private readonly mailerService: MailerService,
-        @Inject(services.logger) private readonly logger: ClientProxy,
+        @Inject(ConfigService) private readonly configService: ConfigService,
     ) {}
 
     public async sendConfirmCode({
@@ -22,6 +20,8 @@ export class MailService {
         code,
     }: UserConfirmDto): Promise<IRes> {
         try {
+            const user =
+                process.env.SMTP_USER || this.configService.get('smtp.user');
             await this.mailerService.sendMail({
                 to: email,
                 from: user,
@@ -33,8 +33,11 @@ export class MailService {
                 message: '',
             };
         } catch (e) {
-            this.logger.send(logs.error, `${e}`).subscribe();
-            throw new RpcException(codes.serverErr);
+            const error: IError = {
+                code: codes.serverErr,
+                reason: `${e}`,
+            };
+            throw new RpcException(error);
         }
     }
 }
