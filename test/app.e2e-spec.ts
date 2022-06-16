@@ -88,17 +88,7 @@ describe('AppController (e2e)', () => {
             'sendConfirmCode',
             JSON.stringify({ test: '' }),
         );
-        const logInfo = () => {
-            return new Promise((resolve, reject) => {
-                logger.send('info', 'inf').subscribe({
-                    next: (data) => resolve(data),
-                    error: (err) => reject(err),
-                });
-            });
-        };
         response.subscribe(async (data) => {
-            const test = await logInfo();
-            console.log(test);
             expect(typeof data).toEqual('string');
             const res = JSON.parse(data) as IRes;
             expect(res.hasOwnProperty('status')).toEqual(true);
