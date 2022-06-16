@@ -18,7 +18,7 @@ export class MailExceptionFilter implements RpcExceptionFilter<RpcException> {
             status: statuses.error,
         };
         const resStr = JSON.stringify(res);
-        const errStr = `mail_service ${error.reason}`;
+        const errStr = `mail_service: ${error.reason}`;
         this.loggerService.error(errStr);
         return of(resStr);
     }

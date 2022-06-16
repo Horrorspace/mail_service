@@ -5,6 +5,9 @@ import { AppModule } from '../src/app.module';
 import { getOptions } from '../src/main';
 import { Observable } from 'rxjs';
 import { IRes } from 'src/mail/interfaces/IRes';
+import { LoggerService } from '../src/logger/logger.service';
+import { MailExceptionFilter } from '../src/mail/filters/mail-exception.filter';
+import { JsonInterceptor } from '../src/mail/interceptors/json.interceptor';
 
 describe('AppController (e2e)', () => {
     jest.setTimeout(10000);
@@ -47,6 +50,10 @@ describe('AppController (e2e)', () => {
 
         const options = await getOptions();
         app = moduleFixture.createNestMicroservice(options);
+        const appLogger = app.get(LoggerService);
+        app.useLogger(appLogger);
+        app.useGlobalFilters(new MailExceptionFilter(appLogger));
+        app.useGlobalInterceptors(new JsonInterceptor());
         await app.init();
 
         client = app.get(mailService);
@@ -64,7 +71,7 @@ describe('AppController (e2e)', () => {
     it('should return success message', (done) => {
         const response: Observable<string> = client.send(
             'sendConfirmCode',
-            JSON.stringify({ email: 'qwefgklasm@gmail.com', code: '111111' }),
+            JSON.stringify({ email: 'horrorspace@mail.ru', code: '111111' }),
         );
         response.subscribe((data) => {
             expect(typeof data).toEqual('string');

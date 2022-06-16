@@ -26,7 +26,7 @@ export async function getOptions(): Promise<RmqOptions> {
     const queue =
         process.env.MAIL_SERVICE_QUEUE ||
         configService.get('mail_service.queue');
-    const url = `${protocol}://${user}:${password}@${host}${port}`;
+    const url = `${protocol}://${user}:${password}@${host}:${port}`;
     const options: RmqOptions = {
         transport: Transport.RMQ,
         options: {

@@ -27,19 +27,19 @@ export class LoggerService implements ILogger {
 
     public error(message: string): void {
         console.error(message);
-        const level = logs.info;
+        const level = logs.error;
         this._log(level, message);
     }
 
     public warn(message: string): void {
         console.warn(message);
-        const level = logs.info;
+        const level = logs.warn;
         this._log(level, message);
     }
 
     public debug(message: string): void {
         console.debug(message);
-        const level = logs.info;
+        const level = logs.debug;
         this._log(level, message);
     }
 }

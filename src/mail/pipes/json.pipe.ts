@@ -2,6 +2,7 @@ import { PipeTransform, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { UserConfirmDto } from '../dto/user-confirm.dto';
 import { codes } from '../enums/codes.enum';
+import { IError } from '../interfaces/IError';
 
 @Injectable()
 export class JsonPipe implements PipeTransform {
@@ -9,18 +10,40 @@ export class JsonPipe implements PipeTransform {
         if (typeof value === 'string') {
             const data = JSON.parse(value) as UserConfirmDto;
             if (!data.hasOwnProperty('email')) {
-                throw new RpcException(codes.badRequest);
+                const error: IError = {
+                    code: codes.badRequest,
+                    reason: 'there is not email field'
+                }
+                throw new RpcException(error);
             }
             if (!data.hasOwnProperty('code')) {
-                throw new RpcException(codes.badRequest);
+                const error: IError = {
+                    code: codes.badRequest,
+                    reason: 'there is not code field'
+                }
+                throw new RpcException(error);
             }
             if (typeof data.email !== 'string') {
-                throw new RpcException(codes.badRequest);
+                const error: IError = {
+                    code: codes.badRequest,
+                    reason: 'there is not valide email field'
+                }
+                throw new RpcException(error);
             }
             if (typeof data.code !== 'string') {
-                throw new RpcException(codes.badRequest);
+                const error: IError = {
+                    code: codes.badRequest,
+                    reason: 'there is not valide code field'
+                }
+                throw new RpcException(error);
             }
             return data;
-        } else throw new RpcException(codes.badRequest);
+        } else {
+            const error: IError = {
+                code: codes.badRequest,
+                reason: 'there is not valid value'
+            }
+            throw new RpcException(error);
+        }
     }
 }

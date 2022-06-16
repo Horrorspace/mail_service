@@ -1,8 +1,8 @@
 smtp:
-  host: 'smtp.gmail.com'
+  host: 'smtp.mail.ru'
   secure: true
-  user: 'qwefgklasm@gmail.com'
-  password: 'LOMzXtWT'
+  user: 'horrorspace@mail.ru'
+  password: '3zSULzqLCsp7SbyhBUUj'
 
 rabbitmq:
   protocol: 'amqp'
