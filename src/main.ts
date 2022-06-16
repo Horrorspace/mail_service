@@ -22,7 +22,8 @@ export async function getOptions(): Promise<RmqOptions> {
         process.env.RABBITMQ_PASSWORD || configService.get('rabbitmq.password');
     const durable =
         process.env.RABBITMQ_DURABLE === 'true' ||
-        configService.get('rabbitmq.durable');
+        (process.env.RABBITMQ_DURABLE === undefined &&
+            configService.get('rabbitmq.durable'));
     const queue =
         process.env.MAIL_SERVICE_QUEUE ||
         configService.get('mail_service.queue');

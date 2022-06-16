@@ -14,7 +14,9 @@ import { LoggerModule } from '../logger/logger.module';
                 const host =
                     process.env.SMTP_HOST || configService.get('smtp.host');
                 const secure =
-                    process.env.SMTP_SECURE || configService.get('smtp.secure');
+                    process.env.SMTP_SECURE === 'true' ||
+                    (process.env.SMTP_SECURE === undefined &&
+                        configService.get('smtp.secure'));
                 const protocol = secure ? 'smtps' : 'smtp';
                 const user =
                     process.env.SMTP_USER || configService.get('smtp.user');
