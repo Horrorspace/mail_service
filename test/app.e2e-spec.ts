@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { IRes } from 'src/mail/interfaces/IRes';
 import { LoggerService } from '../src/logger/logger.service';
 import { MailExceptionFilter } from '../src/mail/filters/mail-exception.filter';
-import { JsonInterceptor } from '../src/mail/interceptors/json.interceptor';
 
 describe('AppController (e2e)', () => {
     jest.setTimeout(10000);
@@ -53,7 +52,6 @@ describe('AppController (e2e)', () => {
         const appLogger = app.get(LoggerService);
         app.useLogger(appLogger);
         app.useGlobalFilters(new MailExceptionFilter(appLogger));
-        app.useGlobalInterceptors(new JsonInterceptor());
         await app.init();
 
         client = app.get(mailService);
