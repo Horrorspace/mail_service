@@ -6,13 +6,17 @@ import { IError } from '../interfaces/IError';
 @Injectable()
 export class JsonPipe implements PipeTransform {
     public transform(value: any): object {
-        if (typeof value === 'string') {
-            const data = JSON.parse(value) as object;
-            return data;
-        } else {
+        try {
+            if (typeof value === 'string') {
+                const data = JSON.parse(value) as object;
+                return data;
+            } else {
+                throw 'there is not valid value';
+            }
+        } catch (e) {
             const error: IError = {
                 code: codes.badRequest,
-                reason: 'there is not valid value',
+                reason: `${e}`,
             };
             throw new RpcException(error);
         }
